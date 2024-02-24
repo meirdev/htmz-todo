@@ -1,0 +1,32 @@
+<!-- tasks.html -->
+
+{% block tasks %}
+<div id="tasks">
+    <ul class="list-group mb-3">
+        {% for task in tasks %}
+        <li class="list-group-item">
+            <form action="/update#tasks" method="post" target="htmz">
+                <input type="hidden" name="id" value="{{ task.id }}">
+                <input type="hidden" name="is_done" value="{{ False if task.is_done else True }}">
+                <button class="btn btn-link p-1" type="submit">
+                    {% if task.is_done %}
+                    <i class="bi bi-check-square-fill text-primary me-1"></i>
+                    {% else %}
+                    <i class="bi bi-square text-primary me-1"></i>
+                    {% endif %}
+                </button>
+                <span >{{ task.title }}</span>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    {% if tasks | length > 0 %}
+    <div class="text-center">
+        <form action="/clean#tasks" method="post" target="htmz">
+            <button type="submit" class="btn btn-danger">נקה רשימה</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
